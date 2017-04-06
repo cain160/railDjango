@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<!-- Template by quackit.com -->
+<!--Login Page -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>RailServe Login</title>
+    {% load static %}
+
+    <!--<link rel="stylesheet" type="text/css" href={% static "./CSS/bootstrap.min.css" %}>-->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script src="{% static "./JS/jquery-3.1.1.js" %}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href={% static "./CSS/front_page.css" %}>
+
+
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="Bootstrap/css/bootstrap.min.css"> -->
+
+
+
+
+</head>
+
+<body>
+
+<header id="header"><p>Railserve Tracking Login</p></header>
+
+<div id="container">
+
+    <main id="center" class="column">
+        <article>
+            <h2><b>Tracking Database</b></h2>
+            <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+           <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+         <!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
+            <div class="container">
+                <h2>Device Selection</h2>
+                <table id="devices" class="table  table-striped table-bordered table-hover">
+                    <script >
+                        $(document).ready(function() {
+                            $('#devices').DataTable();
+                        } );
+
+                    </script>
+                    <thead>
+                    <tr>
+                        <th>Vehicle</th>
+                        <th>Hardware ID</th>
+                        <th>Purpose</th>
+                        <th>Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    {% if device_list %}
+                        {% for device in device_list %}
+                            <tr>
+                                <td>{{ device.status }}  1</td>
+                                <td>{{ device.id  }} </td>
+                                <td>{{ device.position }}  </td>
+                                <td><a href="{% url 'details' deviceID=device.id %} "><button button type="button" class="btn btn-info">Details</button></a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--Display Database here!-->
+            <p>Place database content here!</p>
+            <style>
+                #map {
+                    height: 400px;
+                    width: 100%;
+                }
+            </style>
+
+            <h3>My Google Maps Demo</h3>
+
+            Latitude: <input type="text" id="myLat" value="">
+            Longitude: <input type="text" id="myLon" value="">
+            <button onclick="corMap()" class="btn btn-info">Update Coordinates</button>
+            <div id="map"></div>
+
+            {% load static %}
+            <script  src={% static "./JS/gmAPI.js" %}></script>
+
+            {% if device_list %}
+                {% for device in device_list %}
+                    <script>
+
+                        updateDevices({{ device.position.latitude }} ,{{ device.position.longitude }} ,{{ device.id  }});
+                    </script>
+                {% endfor %}
+            {% endif %}
+
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPYnUWFD4QdPmpw8d8iYBqZCaY_rnbTw8&callback=initMap">
+            </script>
+        </article>
+
+    </main>
+
+
+    <nav id="left" class="column">
+        <h3>Sort By:</h3>
+        <ul>
+            <!--SQL Statements to provide certain ordering-->
+            <!--Chronological-->
+            <li><a href="#">Date</a></li>
+            <!--Farthest to lowest? -->
+            <li><a href="#">Distance</a></li>
+            <li><a href="#">Location</a></li>
+            <li><a href="#">Activity</a></li>
+            <li><a href="#">Inactivity</a></li>
+        </ul>
+    </nav>
+
+
+    <div id="right" class="column">
+        <h3>Right heading</h3>
+        <!--<p> So long as there is breath in me, that long will I persist.
+        </br></br>For now I know one of the greatest principles of success; if I persist long enough I will win.</p>-->
+        <p>Far and away the best prize that life has to offer is the chance to work hard at work worth doing.</p>
+    </div>
+
+
+    <div id="footer-wrapper">
+        <footer id="footer"><p>RailServe</p></footer>
+    </div>
+
+</div>
+
+
+
+</body>
+
+</html>
