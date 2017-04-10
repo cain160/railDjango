@@ -25,7 +25,7 @@ SECRET_KEY = 'u!u3fa+um4#2!7=xb))#r$fo&%8%*-!98=j2l67@0(k##&@^$s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.187', 'railserve.asuscomm.com']
+ALLOWED_HOSTS = ['railserve.asuscomm.com']
 
 
 # Application definition
