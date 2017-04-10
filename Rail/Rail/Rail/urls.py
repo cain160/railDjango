@@ -21,6 +21,7 @@ import Railserve.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^/', Railserve.views.devices, name='homepage'),
     url(r'^home/',  Railserve.views.devices,name='homepage'),
     url(r'^detailView/(?P<deviceID>[0-9]+)/',  Railserve.views.detail_device,name='details')
 
