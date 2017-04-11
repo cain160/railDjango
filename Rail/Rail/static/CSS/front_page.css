@@ -7,10 +7,32 @@
 			text-align: center;
 			text-decoration: underline;
 		}
+        .table td
+        {
+            text-align: center;
+        }
+        #map
+        {
+            height: 400px;
+            width: 100%;
+        }
+        a
+        {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
 		a:hover
 		{
 			background-color: #cccccc;
 		}
+        ul
+        {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
 		#header p
 		{
 			color: #FFFFFF;
