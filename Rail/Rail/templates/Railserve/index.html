@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!-- Template by quackit.com -->
 <!--Login Page -->
@@ -8,7 +7,8 @@
     <title>RailServe Login</title>
     {% load static %}
 
-    <!--<link rel="stylesheet" type="text/css" href={% static "./CSS/bootstrap.min.css" %}>-->
+    <link rel="stylesheet" type="text/css" href={% static
+    "./CSS/bootstrap.min.css" %}>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <script src="{% static "./JS/jquery-3.1.1.js" %}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -18,8 +18,6 @@
 
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <!--<link rel="stylesheet" type="text/css" href="Bootstrap/css/bootstrap.min.css"> -->
-
-
 
 
 </head>
@@ -34,17 +32,17 @@
         <article>
             <h2><b>Tracking Database</b></h2>
             <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-           <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-         <!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+            <!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
 
             <div class="container">
                 <h2>Device Selection</h2>
                 <table id="devices" class="table  table-striped table-bordered table-hover">
-                    <script >
-                        $(document).ready(function() {
+                    <script>
+                        $(document).ready(function () {
                             $('#devices').DataTable();
-                        } );
+                        });
 
                     </script>
                     <thead>
@@ -61,10 +59,12 @@
                     {% if device_list %}
                         {% for device in device_list %}
                             <tr>
-                                <td>{{ device.status }}  1</td>
-                                <td>{{ device.id  }} </td>
+                                <td>{{ device.status }} 1</td>
+                                <td>{{ device.id }}</td>
                                 <td>{{ device.position }}  </td>
-                                <td><a href="{% url 'details' deviceID=device.id %} "><button button type="button" class="btn btn-info">Details</button></a></td>
+                                <td><a href="{% url 'details' deviceID=device.id %} ">
+                                    <button button type="button" class="btn btn-info">Details</button>
+                                </a></td>
                             </tr>
                         {% endfor %}
                     {% endif %}
@@ -90,13 +90,31 @@
             <div id="map"></div>
 
             {% load static %}
-            <script  src={% static "./JS/gmAPI.js" %}></script>
+            <script src={% static
+            "./JS/gmAPI.js" %}></script>
 
             {% if device_list %}
                 {% for device in device_list %}
                     <script>
 
-                        updateDevices({{ device.position.latitude }} ,{{ device.position.longitude }} ,{{ device.id  }});
+            updateDevices({
+            {
+                device.position.latitude
+            }
+            },
+            {
+                {
+                    device.position.longitude
+                }
+            }
+            ,
+            {
+                {
+                    device.id
+                }
+            }
+            )
+            ;
                     </script>
                 {% endfor %}
             {% endif %}
@@ -137,7 +155,6 @@
     </div>
 
 </div>
-
 
 
 </body>

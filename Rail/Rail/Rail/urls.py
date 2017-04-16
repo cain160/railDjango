@@ -14,14 +14,13 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+import Railserve.views
 from django.conf.urls import url
 from django.contrib import admin
-import Railserve.views
-
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^home/',  Railserve.views.devices,name='homepage'),
-    url(r'^detailView/(?P<deviceID>[0-9]+)/',  Railserve.views.detail_device,name='details')
+    url(r'^home/', Railserve.views.devices, name='homepage'),
+    url(r'^detailView/(?P<deviceID>[0-9]+)/', Railserve.views.detail_device, name='details')
 
 ]
