@@ -11,6 +11,20 @@ h2 {
 a:hover {
     background-color: #cccccc;
 }
+.table td
+{
+    text-align: center;
+}
+#map
+{
+    height: 400px;
+    width: 100%;
+}
+a
+{
+    color: #ffffff;
+    text-decoration: none;
+}
 
 #header p {
     color: #FFFFFF;

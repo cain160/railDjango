@@ -12,273 +12,154 @@
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 
     <script src={% static "./JS/jquery-3.1.1.js" %}></script>
-    <
-    header
-    id = "header" >
-        < p
-    class
-    = "home" > < a
-    href = "{% url 'homepage' %}" >
-        < div
-    class
-    = "home-image" > < i
-    class
-    = "fa fa-home" > Homepage < / i > < / div >
-        < / a > < / p >
+    <header id="header">
+        <p class="home"><a href="{% url 'homepage' %}">
+            <div class="home-image"><i class="fa fa-home"> Homepage</i></div>
+        </a></p>
     </header>
 </head>
 <body>
 
-        < div
-    id = "container" >
-        < main
-    id = "center"
-    class
-    = "column" >
-        < article >
-        < h2 > Welcome
-    to
-    Vehicle
-    1
-    's Page!</h2>
+<div id="container">
+    <main id="center" class="column">
+        <article>
+            <h2>Welcome to Vehicle 1's Page!</h2>
             <!--Display Database here!-->
-    < div
-    class
-    = "container" >
-        < style >
-    .table
-    td
-    {
-        text - align
-    :
-        center;
-    }
-    </
-    style >
-    < h2 > Vehicle
-    1
-    Data < / h2 >
-    < table
-    class
-    = "table table-inverse table-hover" >
-        < thead >
-        < tr >
-        < th > Date < / th >
-        < th > Time < / th >
-        < th > Latitude < / th >
-        < th > Longitude < / th >
-        < th > Distance < / th >
-        < th > Hours
-    On < / th >
+            <div class="container">
+                <h2>Vehicle 1 Data </h2>
+                <table class="table table-inverse table-hover">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Distance</th>
+                        <th>Hours On</th>
 
-    < / tr >
-    < / thead >
-    < tbody >
-    < tr >
-    { %
-    if device %}
-    {%
-        for dev in device %}
-    <
-    td > {
-    {
-        dev.id
-    }
-    }</
-    td >
-    < td > {
-    {
-        dev.date
-    }
-    }</
-    td >
-    < td > {
-    {
-        dev.position.latitude
-    }
-    }</
-    td >
-    < td > {
-    {
-        dev.position.longitude
-    }
-    }</
-    td >
-    < td > {
-    {
-        dev.distance_on
-    }
-    }</
-    td >
-    < / tr >
-    { % endfor %
-    }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% if device %}
+                            {% for dev in device %}
+                                <td>{{ dev.id }}</td>
+                                <td>{{ dev.date }}</td>
+                                <td>{{ dev.position.latitude }}</td>
+                                <td>{{ dev.position.longitude }}</td>
+                                <td>{{ dev.distance_on }}</td>
+                                </tr>
+                            {% endfor %}
                         {% endif %}
-    </
-    tbody >
-    < / table >
-    < / div >
-    < style >
-    #
-    map
-    {
-        height: 400
-        px;
-        width: 100 %;
-    }
-    </
-    style >
-    < h3 > My
-    Google
-    Maps
-    Demo < / h3 >
-    < !-- < p
-    id = "lati" > {
-    {
-        lat
-    }
-    }</
-    p >
-                <p id ="long">{{lon}}</p>-->
-    < button
-    onclick = "corMap()"
-    class
-    = "btn btn-info" > Update
-    Coordinates < / button >
-    < div
-    id = "map"
-    style = "width:100%;height:500px" > < / div >
-        < script >
-        function myMap() {
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>My Google Maps Demo</h3>
+            <button onclick="corMap()" class="btn btn-info">Update Coordinates</button>
+            <div id="map" style="width:100%;height:500px"></div>
+            <script>
+                function myMap() {
 
 
-            var markers = [];
-            var positions = [];
-            var tempPosition;
+                    var markers = [];
+                    var positions = [];
+                    var tempPosition;
 
-            {%
-                if device %}
-            {%
-                for path in device %}
-            tempPosition = new google.maps.LatLng({
-            {
-                path.position.latitude
-            }
-        },
-            {
-                {
-                    path.position.longitude
+                    {% if device %}
+                        {% for path in device %}
+                            tempPosition = new google.maps.LatLng({{ path.position.latitude }}, {{ path.position.longitude }});
+                            positions.push(tempPosition);
+                            markers.push(new google.maps.Marker({position: tempPosition}));
+
+                        {% endfor %}
+
+
+                        var mapCanvas = document.getElementById("map");
+                        var mapOptions = {
+                            center: new google.maps.LatLng({{ device.0.position.latitude }}, {{ device.0.position.longitude }}),
+                            zoom: 14
+                        };
+                        var map = new google.maps.Map(mapCanvas, mapOptions);
+                        markers[0].setMap(map);
+
+
+                        if (markers) {
+                            var infowindow;
+                            for (var i = 0; i < markers.length; i++) {
+                                if (i == 0)
+                                    infowindow = new google.maps.InfoWindow({
+                                        content: "Starting Point"
+                                    });
+                                else {
+                                    infowindow = new google.maps.InfoWindow({
+                                        content: "Destination " + i
+                                    });
+                                }
+                                markers[i].setMap(map);
+                                infowindow.open(map, markers[i]);
+                            }
+                            var flightPath = new google.maps.Polyline({
+                                //Start, Dest 1, Dest 2
+                                path: positions,
+                                strokeColor: "#0000FF",
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2
+                            });
+                            flightPath.setMap(map);
+                        }
+                    {% endif %}
+
+
+
+                    /*
+                     //var laty = document.getElementById(lati);
+                     //var longy = document.getElementById(long);
+                     var kennesaw = new google.maps.LatLng(33.9397, -84.5197);
+                     //var kennesaw = new google.maps.LatLng(laty, lon);
+                     var bigChicken = new google.maps.LatLng(33.9514,-84.5204);
+                     //Johnnie Maccracken's
+                     var theBar = new google.maps.LatLng(33.9519,-84.5488);
+                     var mapCanvas = document.getElementById("map");
+                     var mapOptions = {center: kennesaw, zoom: 14};
+                     var map = new google.maps.Map(mapCanvas,mapOptions);
+                     var marker = new google.maps.Marker({position:kennesaw});
+                     var marker2 = new google.maps.Marker({position:bigChicken});
+                     var marker3 = new google.maps.Marker({position:theBar});
+                     marker.setMap(map);
+                     */
+
+
+                    /*  var infowindow = new google.maps.InfoWindow({
+                     content: "Starting Point"});
+                     marker2.setMap(map);
+                     var infowindow2 = new google.maps.InfoWindow({
+                     content: "Destination 1"});
+                     marker3.setMap(map);
+                     var infowindow3 = new google.maps.InfoWindow({
+                     content: "Destination 2"});
+                     infowindow.open(map,marker);
+                     infowindow2.open(map,marker2);
+                     infowindow3.open(map,marker3);
+                     var flightPath = new google.maps.Polyline({
+                     //Start, Dest 1, Dest 2
+                     path: [kennesaw, bigChicken, theBar],
+                     strokeColor: "#0000FF",
+                     strokeOpacity: 0.8,
+                     strokeWeight: 2
+                     });
+                     flightPath.setMap(map);*/
                 }
-            }
-            )
-            ;
-            positions.push(tempPosition);
-            markers.push(new google.maps.Marker({position: tempPosition}));
-
-            {%
-                endfor %
-            }
-
-
-            var mapCanvas = document.getElementById("map");
-            var mapOptions = {
-                center: new google.maps.LatLng({
-            {
-                device
-                .0.position.latitude
-            }
-        },
-            {
-                {
-                    device
-                    .0.position.longitude
-                }
-            }
-            ),
-            zoom: 14
-        }
-            ;
-            var map = new google.maps.Map(mapCanvas, mapOptions);
-            markers[0].setMap(map);
-
-
-            if (markers) {
-                var infowindow;
-                for (var i = 0; i < markers.length; i++) {
-                    if (i == 0)
-                        infowindow = new google.maps.InfoWindow({
-                            content: "Starting Point"
-                        });
-                    else {
-                        infowindow = new google.maps.InfoWindow({
-                            content: "Destination " + i
-                        });
-                    }
-                    markers[i].setMap(map);
-                    infowindow.open(map, markers[i]);
-                }
-                var flightPath = new google.maps.Polyline({
-                    //Start, Dest 1, Dest 2
-                    path: positions,
-                    strokeColor: "#0000FF",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2
-                });
-                flightPath.setMap(map);
-            }
-            {%
-                endif %
-            }
-
-
-            /*
-             //var laty = document.getElementById(lati);
-             //var longy = document.getElementById(long);
-             var kennesaw = new google.maps.LatLng(33.9397, -84.5197);
-             //var kennesaw = new google.maps.LatLng(laty, lon);
-             var bigChicken = new google.maps.LatLng(33.9514,-84.5204);
-             //Johnnie Maccracken's
-             var theBar = new google.maps.LatLng(33.9519,-84.5488);
-             var mapCanvas = document.getElementById("map");
-             var mapOptions = {center: kennesaw, zoom: 14};
-             var map = new google.maps.Map(mapCanvas,mapOptions);
-             var marker = new google.maps.Marker({position:kennesaw});
-             var marker2 = new google.maps.Marker({position:bigChicken});
-             var marker3 = new google.maps.Marker({position:theBar});
-             marker.setMap(map);
-             */
-
-
-            /*  var infowindow = new google.maps.InfoWindow({
-             content: "Starting Point"});
-             marker2.setMap(map);
-             var infowindow2 = new google.maps.InfoWindow({
-             content: "Destination 1"});
-             marker3.setMap(map);
-             var infowindow3 = new google.maps.InfoWindow({
-             content: "Destination 2"});
-             infowindow.open(map,marker);
-             infowindow2.open(map,marker2);
-             infowindow3.open(map,marker3);
-             var flightPath = new google.maps.Polyline({
-             //Start, Dest 1, Dest 2
-             path: [kennesaw, bigChicken, theBar],
-             strokeColor: "#0000FF",
-             strokeOpacity: 0.8,
-             strokeWeight: 2
-             });
-             flightPath.setMap(map);*/
-        }
-    </script>
-    <script async defer
+            </script>
+            <script async defer
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPYnUWFD4QdPmpw8d8iYBqZCaY_rnbTw8&callback=myMap">
-    </script>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </article>
+            </script>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+        </article>
     </main>
     <nav id="left" class="column">
         <h3>Sort By:</h3>
@@ -302,74 +183,74 @@
             <li><a href="details3.html">Vehicle 3</a></li>
         </ul>
     </div>
-    </div>
-    <div id="footer-wrapper">
-        <footer id="footer"><p>RailServe</p></footer>
-    </div>
-    <script>/*
-     $(window).load(function(){
-     var start = window.sessionStorage.getItem("startTime");
-     if(start === "" || start === null){
-     start = "1970-01-01T01:01"
-     }
-     var end = window.sessionStorage.getItem("endTime");
-     var end = window.sessionStorage.getItem("endTime");
-     if(end === "" || end === null){
-     end = "2200-01-01T01:01"
-     }
-     var dev = "1";
-     console.log(start)
-     console.log(end)
-     console.log(dev)
+</div>
+<div id="footer-wrapper">
+    <footer id="footer"><p>RailServe</p></footer>
+</div>
+<script>/*
+ $(window).load(function(){
+ var start = window.sessionStorage.getItem("startTime");
+ if(start === "" || start === null){
+ start = "1970-01-01T01:01"
+ }
+ var end = window.sessionStorage.getItem("endTime");
+ var end = window.sessionStorage.getItem("endTime");
+ if(end === "" || end === null){
+ end = "2200-01-01T01:01"
+ }
+ var dev = "1";
+ console.log(start)
+ console.log(end)
+ console.log(dev)
 
-     getLocationInfo(start, end, dev);
-     });*/
+ getLocationInfo(start, end, dev);
+ });*/
 
-    <!--Function calls server to get location info from database.-->
-    /* function getLocationInfo(start, end, dev, id){
-     var jqXHR = $.ajax({
-     type: "GET",
-     //url: "http://railserve.asuscomm.com:5000/getLocInf/" + start + "/" + end + "/" + dev,
-     url: "http://127.0.0.1:80/getLocInf/" + start + "/" + end + "/" + dev,
-     success: function(evt){
-     var jsonStr = JSON.stringify(evt, undefined, 2);
-     console.log(jsonStr)
-     console.log(evt['locinfo'])
-     var len = evt['locinfo'].length;
-     var txt = "";
-     for(var i=0; i<len; i++){
-     console.log("<label>" + evt['locinfo'][i][0] + " " + evt['locinfo'][i][1] + "</label><br>")
-     }
+<!--Function calls server to get location info from database.-->
+/* function getLocationInfo(start, end, dev, id){
+ var jqXHR = $.ajax({
+ type: "GET",
+ //url: "http://railserve.asuscomm.com:5000/getLocInf/" + start + "/" + end + "/" + dev,
+ url: "http://127.0.0.1:80/getLocInf/" + start + "/" + end + "/" + dev,
+ success: function(evt){
+ var jsonStr = JSON.stringify(evt, undefined, 2);
+ console.log(jsonStr)
+ console.log(evt['locinfo'])
+ var len = evt['locinfo'].length;
+ var txt = "";
+ for(var i=0; i<len; i++){
+ console.log("<label>" + evt['locinfo'][i][0] + " " + evt['locinfo'][i][1] + "</label><br>")
+ }
 
-     <!--$('#' + id + '').append(txt);-->
-     }
-     });
-     return jqXHR.responseText;
-     }*/
-    </script>
-    <script>/*
-     function getData(){
-     var jqXHR = $.ajax({
-     type: "GET",
-     //url: "http://railserve.asuscomm.com:5000/getData/" + start + "/" + end + "/" + dev,
-     url: ' http://127.0.0.1:80/getData/',
-     success: function(evt){
-     var jsonStr = JSON.stringify(evt, undefined, 2);
-     console.log(jsonStr)
-     console.log("Hello")
-     console.log(evt['locinfo'])
-     var len = evt['locinfo'].length;
-     var txt = "";
-     for(var i=0; i<len; i++){
-     console.log("<label>" + evt['locinfo'][i][0] + " " + evt['locinfo'][i][1] + "</label><br>")
-     }
+ <!--$('#' + id + '').append(txt);-->
+ }
+ });
+ return jqXHR.responseText;
+ }*/
+</script>
+<script>/*
+ function getData(){
+ var jqXHR = $.ajax({
+ type: "GET",
+ //url: "http://railserve.asuscomm.com:5000/getData/" + start + "/" + end + "/" + dev,
+ url: ' http://127.0.0.1:80/getData/',
+ success: function(evt){
+ var jsonStr = JSON.stringify(evt, undefined, 2);
+ console.log(jsonStr)
+ console.log("Hello")
+ console.log(evt['locinfo'])
+ var len = evt['locinfo'].length;
+ var txt = "";
+ for(var i=0; i<len; i++){
+ console.log("<label>" + evt['locinfo'][i][0] + " " + evt['locinfo'][i][1] + "</label><br>")
+ }
 
-     <!--$('#' + id + '').append(txt);-->
-     }
-     });
-     return jqXHR.responseText;
-     }*/
-    </script>
+ <!--$('#' + id + '').append(txt);-->
+ }
+ });
+ return jqXHR.responseText;
+ }*/
+</script>
 </body>
 
 </html>

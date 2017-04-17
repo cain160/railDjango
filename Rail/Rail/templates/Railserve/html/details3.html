@@ -31,12 +31,10 @@
     <main id="center" class="column">
         <article>
             <h2><b>Tracking Database</b></h2>
-            <h2>Welcome to Vehicle 3's Page!</h2>
+            <h2>Welcome to Vehicle 2's Page!</h2>
             <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            </head>
-            <body>
 
             <div class="container">
                 <h2>Device Selection</h2>
@@ -84,16 +82,6 @@
                 </table>
             </div>
 
-            <!--Display Database here!-->
-            <p>Place database content here!</p>
-            <style>
-                #map {
-                    height: 400px;
-                    width: 100%;
-                }
-            </style>
-            </head>
-            <body>
             <h3>My Google Maps Demo</h3>
             Latitude: <input type="text" id="myLat" value="">
             Longitude: <input type="text" id="myLon" value="">
@@ -101,11 +89,6 @@
             <div id="map"></div>
             <script>
                 function initMap() {
-                    //var uluru = {lat: -25.363, lng: 131.044};
-                    //N = Positive
-                    //S = Negative
-                    //W = Negative
-                    //E = Positive
                     var x = 33.9397;
                     var y = -84.5197;
                     //Vehicle 2 Coordinates
@@ -116,12 +99,12 @@
                     var d = -118.2437;
 
                     function corMap() {
-                        var x = document.getElementById("myLat").value;
-                        var y = document.getElementById("myLon").value;
+                        var a = document.getElementById("myLat").value;
+                        var b = document.getElementById("myLon").value;
                     }
 
                     //var uluru = {lat: 33.9397, lng: -84.5197};
-                    var myCenter = {lat: c, lng: d};
+                    var myCenter = {lat: a, lng: b};
                     var mapCanvas = document.getElementById("map");
                     var mapOptions = {center: myCenter, zoom: 4};
                     var map = new google.maps.Map(mapCanvas, mapOptions);
@@ -137,7 +120,6 @@
             <script async defer
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPYnUWFD4QdPmpw8d8iYBqZCaY_rnbTw8&callback=initMap">
             </script>
-            <body>
             <!--Commenting out login for now
             <h2>Login Form</h2>
 

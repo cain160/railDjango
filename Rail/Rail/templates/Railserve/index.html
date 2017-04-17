@@ -7,8 +7,7 @@
     <title>RailServe Login</title>
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href={% static
-    "./CSS/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "./CSS/bootstrap.min.css" %}>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <script src="{% static "./JS/jquery-3.1.1.js" %}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -60,7 +59,7 @@
                         {% for device in device_list %}
                             <tr>
                                 <td>{{ device.status }} 1</td>
-                                <td>{{ device.id }}</td>
+                                <td>{{ device.id }} </td>
                                 <td>{{ device.position }}  </td>
                                 <td><a href="{% url 'details' deviceID=device.id %} ">
                                     <button button type="button" class="btn btn-info">Details</button>
@@ -90,31 +89,13 @@
             <div id="map"></div>
 
             {% load static %}
-            <script src={% static
-            "./JS/gmAPI.js" %}></script>
+            <script src={% static "./JS/gmAPI.js" %}></script>
 
             {% if device_list %}
                 {% for device in device_list %}
                     <script>
 
-            updateDevices({
-            {
-                device.position.latitude
-            }
-            },
-            {
-                {
-                    device.position.longitude
-                }
-            }
-            ,
-            {
-                {
-                    device.id
-                }
-            }
-            )
-            ;
+                        updateDevices({{ device.position.latitude }}, {{ device.position.longitude }}, {{ device.id  }});
                     </script>
                 {% endfor %}
             {% endif %}
