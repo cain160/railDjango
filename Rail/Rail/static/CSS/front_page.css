@@ -25,6 +25,20 @@ a:hover {
     position: relative;
     float: left;
 }
+.table td
+ {
+     text-align: center;
+ }
+ #map
+ {
+     height: 400px;
+     width: 100%;
+ }
+ a
+ {
+     color: #ffffff;
+     text-decoration: none;
+ }
 
 #center {
     padding: 10px 20px;
