@@ -1,17 +1,17 @@
 '''
-    Simple udp socket server
+
+Simple udp socket server
+
 '''
 import socket
 import sys
+import sqlite3
 
-import django
+conn = sqlite3.connect('../../db.sqlite3')
+cur = conn.cursor()
 
-django.setup()
-
-from Railserve import models
-
-HOST = ''  # Symbolic name meaning all available interfaces
-PORT = 4851  # Arbitrary non-privileged port
+HOST = '192.168.1.187'  # Symbolic name meaning all available interfaces
+PORT = 4850 
 
 # Datagram (udp) socket
 try:
@@ -23,7 +23,9 @@ except socket.error as msg:
 
 # Bind socket to local host and port
 try:
+    print('Binding on ' + HOST + ':' + str(PORT) + '...')
     s.bind((HOST, PORT))
+    print('Bound successfully...')
 except socket.error as msg:
     print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
     sys.exit()
@@ -32,37 +34,30 @@ print('Socket bind complete')
 
 # now keep talking with the client
 while 1:
-    # receive data from client (data, addr)
-    d = s.recvfrom(1024)
-    data = d[0]
-    addr = d[1]  ##address where the data comes from.
-
+    data, addr = s.recvfrom(1024)
+    print("Receive data from: " + str(addr))
     if not data:
         break
-
+    
     toProcess = data.decode('utf-8')
+    print(toProcess)
     reply = 'OK...' + toProcess
 
     out = toProcess.split(',')
-
-    latitude = out[2]
-    longitude = out[4]
-    status = out[7]
-    time = out[1]
-
-    IdToParse = out[0].split("=")
-    id = IdToParse[1]
-
     print(out)
-    print("latitude " + latitude)
-    print("longitude " + longitude)
-    print("status " + status)
-    print("time " + time)
-    print("id " + id)
-
-    p = models.Position(latitude=latitude, longitude=longitude)
-    p.save()
-
-    # views.psave(longitude,latitude)
+    id, time, latitude, longitude, speedInKnots, date, validData, powerState = out[0], (str(out[2])[0:2] + ":" + str(out[2])[2:4] + ":" + str(out[2])[4:]), (out[4]+ " " + out[5]), (out[6] + " " + out[7]), out[8], ("20" + str(out[10])[4:] + "-" + str(out[10])[2:4] + "-" + str(out[10])[0:2]), out[3], out[14] 
+    dateTime = date + " " + time
+    print(id)
+    print(time)
+    print(latitude)
+    print(longitude)
+    print(type(speedInKnots))
+    print(speedInKnots)
+    print(date)
+    print(validData)
+    print(dateTime)
+    print(powerState)
+    cur.execute("INSERT INTO Railserve_device VALUES(0, 0, ?, 5, ?, ?)", (speedInKnots, dateTime, id))
+    conn.commit()
 
 s.close()
