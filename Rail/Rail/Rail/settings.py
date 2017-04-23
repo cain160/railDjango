@@ -27,7 +27,7 @@ DEBUG = True
 #Clay's Comment:
 #When working on this on your machine comment this var
 #When pushing, uncomment it so it works on Nate's PI
-ALLOWED_HOSTS = ['railserve.asuscomm.com']
+ALLOWED_HOSTS = [u'railserve.asuscomm.com']
 
 # Application definition
 
