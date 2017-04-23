@@ -8,10 +8,13 @@
     <title>RailServe Login</title>
 
     {% load static %}
+    <!--<link rel="stylesheet" type="text/css" href={% static "./CSS/bootstrap.min.css" %}>-->
     <link rel="stylesheet" type="text/css" href={% static "./CSS/front_page.css" %}>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
     <script src={% static "./JS/jquery-3.1.1.js" %}></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
     <header id="header">
         <p class="home"><a href="{% url 'homepage' %}">
             <div class="home-image"><i class="fa fa-home"> Homepage</i></div>
@@ -23,14 +26,19 @@
 <div id="container">
     <main id="center" class="column">
         <article>
-            <h2>Welcome to Vehicle 1's Page!</h2>
-            <!--Display Database here!-->
+            <h2>Welcome to Vehicle {{ device.0.id }}'s Page!</h2>
+
             <div class="container">
-                <h2>Vehicle 1 Data </h2>
-                <table class="table table-inverse table-hover">
+                <h3 align="center">Vehicle {{ device.0.id }} Data </h3>
+                <table id="detailed_device" class="table table-inverse table-striped table-bordered table-hover"  >
+                    <script>
+                        $(document).ready(function () {
+                            $('#detailed_device').DataTable();
+                        });
+
+                    </script>
                     <thead>
                     <tr>
-                        <th>Date</th>
                         <th>Time</th>
                         <th>Latitude</th>
                         <th>Longitude</th>
@@ -43,11 +51,11 @@
                     <tr>
                         {% if device %}
                             {% for dev in device %}
-                                <td>{{ dev.id }}</td>
                                 <td>{{ dev.date }}</td>
                                 <td>{{ dev.position.latitude }}</td>
                                 <td>{{ dev.position.longitude }}</td>
-                                <td>{{ dev.distance_on }}</td>
+                                <td>{{ distance }}</td>
+                                <td>10</td>
                                 </tr>
                             {% endfor %}
                         {% endif %}

@@ -12,14 +12,21 @@ MESSAGE = "ID=5908,185202.000,0063.9404,N,-0086.5205,W,1,ON"
 print("UDP target IP:", UDP_IP)
 print("UDP target port:", UDP_PORT)
 print("message:", MESSAGE)
+
+count = 0
 while 1:
     long -= 4
     lat += 5
-    ID += 1
-    MESSAGE = "ID=" + str(ID) + "," + str(lat) + "," + str(long) + ",N,-0086.5205,W,1,ON"
+
+    if (count % 5) == 0:
+        ID += 1
+        long /= 2
+        lat /= 3
+
+    MESSAGE = "ID=" + str(ID) + ",1852," + str(lat) + ",N," + str(long) + ",W,1,ON"
     sock = socket.socket(socket.AF_INET,  # Internet
                          socket.SOCK_DGRAM)  # UDP
-
+    count+=1
     sock.sendto(bytes(MESSAGE, 'utf-8'), (UDP_IP, UDP_PORT))
     sock.close()
 

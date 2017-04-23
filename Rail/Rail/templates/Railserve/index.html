@@ -49,19 +49,26 @@
                         <th>Hardware ID</th>
                         <th>Latitude</th>
                         <th>Longitude</th>
+                        <th>Total Distance</th>
                         <th>Details</th>
                     </tr>
                     </thead>
                     <tbody>
 
 
+
                     {% if device_list %}
-                        {% for device in device_list %}
+                        {% for device,distance in device_list %}
                             <tr>
-                                <td>{{ device.status }} 1</td>
-                                <td>{{ device.id }} </td>
-                                <td>{{ device.position.latitude }}°</td>
+                                {% if device.status == True %}
+                                    <td>ON</td>
+                                {% else %}
+                                    <td>OFF</td>
+                                {% endif %}
+                                 <td>{{ device.id }} </td>
+                                 <td>{{ device.position.latitude }}°</td>
                                  <td>{{ device.position.longitude }}°</td>
+                                 <td>{{ distance|floatformat:2 }} miles</td>
                                 <td><a href="{% url 'details' deviceID=device.id %} ">
                                     <button button type="button" class="btn btn-info">Details</button>
                                 </a></td>
