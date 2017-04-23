@@ -6,7 +6,7 @@
     <title>RailServe</title>
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href={% static "./CSS/bootstrap.min.css" %}>
+    <!--<link rel="stylesheet" type="text/css" href={% static "./CSS/bootstrap.min.css" %}-->
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <script src="{% static "./JS/jquery-3.1.1.js" %}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -16,18 +16,18 @@
 
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <!--<link rel="stylesheet" type="text/css" href="Bootstrap/css/bootstrap.min.css"> -->
-
+    <!--Changed-->
 
 </head>
 
 <body>
 
-<header id="header"><p>Railserve Tracking Login</p></header>
+<header id="header"><p>Railserve Tracking </p></header>
 
 <div id="container">
 
     <main id="center" class="column">
-        <article>
+        <br>
             <h2><b>Tracking Database</b></h2>
             <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
             <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
@@ -35,7 +35,7 @@
 
 
             <div class="container">
-                <h2>Device Selection</h2>
+                <h3 align="center">Device Selection</h3>
                 <table id="devices" class="table  table-striped table-bordered table-hover">
                     <script>
                         $(document).ready(function () {
@@ -47,7 +47,8 @@
                     <tr>
                         <th>Vehicle</th>
                         <th>Hardware ID</th>
-                        <th>Purpose</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
                         <th>Details</th>
                     </tr>
                     </thead>
@@ -59,7 +60,8 @@
                             <tr>
                                 <td>{{ device.status }} 1</td>
                                 <td>{{ device.id }} </td>
-                                <td>{{ device.position }}  </td>
+                                <td>{{ device.position.latitude }}°</td>
+                                 <td>{{ device.position.longitude }}°</td>
                                 <td><a href="{% url 'details' deviceID=device.id %} ">
                                     <button button type="button" class="btn btn-info">Details</button>
                                 </a></td>
@@ -70,20 +72,24 @@
                     </tbody>
                 </table>
             </div>
-
-            <!--Display Database here!-->
-            <p>Place database content here!</p>
+            <!--
+            I added this into the front_page.css
             <style>
                 #map {
                     height: 400px;
                     width: 100%;
                 }
             </style>
-
-            <h3>My Google Maps Demo</h3>
-            Latitude: <input type="text" id="myLat" value="">
-            Longitude: <input type="text" id="myLon" value="">
-            <button onclick="corMap()" class="btn btn-info">Update Coordinates</button>
+            -->
+            </br>
+            </br>
+            </br>
+            <h3 align="center">Google Map</h3>
+            <!--I had to keep these ids so the map would work
+            If you can set it up so it doesn't need them
+            please remove these hidden p's-->
+            <p hidden id="myLat">
+            <p hidden id="myLon">
             <div id="map"></div>
 
             {% load static %}
@@ -120,11 +126,11 @@
     </nav>
 
 
-    <div id="right" class="column">
+    <div id ="right" class="column">
         <h3>Right heading</h3>
         <!--<p> So long as there is breath in me, that long will I persist.
         </br></br>For now I know one of the greatest principles of success; if I persist long enough I will win.</p>-->
-        <p>Far and away the best prize that life has to offer is the chance to work hard at work worth doing.</p>
+        <p>"Far and away the best prize that life has to offer is the chance to work hard at work worth doing."</p>
     </div>
 
 
