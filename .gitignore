@@ -1,1 +1,6 @@
-/Rail/Rail/Railserve/Client-server/server.py
+Rail/Rail/Rail/settings.py
+bin/
+include/
+lib/
+local/
+pip-selfcheck.json
