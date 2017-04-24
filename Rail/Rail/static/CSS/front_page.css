@@ -775,6 +775,22 @@ input[type="button"].btn-block {
 .table-responsive.table-bordered {
     border: 0;
 }
+#devices_filter
+{
+   padding-bottom: 10px;
+}
+#detailed_device_filter
+{
+   padding-bottom: 10px;
+}
+#devices_length
+{
+    padding-bottom: 5px;
+}
+#detailed_device_length
+{
+    padding-bottom: 5px;
+}
 .form-control {
     display: block;
     width: 100%;
@@ -793,6 +809,26 @@ input[type="button"].btn-block {
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
+.form-control:nth-of-type(2) {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
 
 .form-control:focus {
     border-color: #66afe9;
@@ -956,6 +992,7 @@ fieldset[disabled] .checkbox label {
 .form-control-static.input-sm {
     padding-right: 0;
     padding-left: 0;
+
 }
 
 .input-sm {
@@ -966,6 +1003,7 @@ fieldset[disabled] .checkbox label {
     border-radius: 3px;
 }
 
+
 select.input-sm {
     height: 30px;
     line-height: 30px;
@@ -974,6 +1012,7 @@ select.input-sm {
 textarea.input-sm,
 select[multiple].input-sm {
     height: auto;
+
 }
 
 .form-group-sm .form-control {
@@ -989,11 +1028,13 @@ select[multiple].input-sm {
     height: 30px;
     line-height: 30px;
 
+
 }
 
 .form-group-sm textarea.form-control,
 .form-group-sm select[multiple].form-control {
     height: auto;
+
 }
 
 .form-group-sm .form-control-static {
@@ -1002,6 +1043,7 @@ select[multiple].input-sm {
     padding: 6px 10px;
     font-size: 12px;
     line-height: 1.5;
+
 }
 
 .input-lg {
@@ -1010,6 +1052,7 @@ select[multiple].input-sm {
     font-size: 18px;
     line-height: 1.3333333;
     border-radius: 6px;
+
 }
 
 select.input-lg {
