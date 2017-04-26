@@ -57,14 +57,16 @@ def detail_device(request, deviceID):
     template = loader.get_template('Railserve/html/details1.html')
     dist = aggregateDist(device)
     distances = []
-
+    accum = 0
+    print(paths)
     for i in range(0, len(paths)):
         if i == 0:
-            distances.append(i)
+            distances.append(accum)
         else:
-            distances.append(
-                distance(device[i - 1].position.latitude, device[i - 1].position.longitude, device[i].position.latitude,
-                         device[i].position.longitude))
+            accum += distance(device[i - 1].position.latitude, device[i - 1].position.longitude,
+                              device[i].position.latitude, device[i].position.longitude)
+            distances.append(accum)
+
 
     device_data = zip(device, distances)
     context = {
