@@ -49,16 +49,17 @@
                     </thead>
                     <tbody>
                     <tr>
-                        {% if device %}
-                            {% for dev in device %}
-                                <td>{{ dev.date }}</td>
-                                <td>{{ dev.position.latitude }}</td>
-                                <td>{{ dev.position.longitude }}</td>
-                                <td>{{ distance }}</td>
-                                <td>10</td>
-                                </tr>
-                            {% endfor %}
-                        {% endif %}
+                        {% if device_data %}
+                        {% for dev,distance in device_data %}
+                        <td>{{ dev.id }}</td>
+                        <td>{{ dev.date }}</td>
+                        <td>{{ dev.position.latitude }}</td>
+                        <td>{{ dev.position.longitude }}</td>
+                        <td>{{ distance }}</td>
+                        <td>10</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
