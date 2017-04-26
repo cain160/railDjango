@@ -1,14 +1,8 @@
 # Create your views here.
-from django.db.models import Count, Min
+from Railserve.models import Device, Position
 from django.http import HttpResponse
 from django.template import loader
-from Railserve.models import Device, Position
-
-from geopy.geocoders import Nominatim
-from geopy.distance import great_circle
 from geopy.distance import vincenty
-
-
 
 
 def distance(lat, long, lat2, long2):
@@ -29,17 +23,17 @@ def aggregateDist(device_list):
 def devices(request):
     #device_list = Device.objects.annotate(recent_update = Min('date'))
 
-    device_list = Device.objects.raw('SELECT * FROM Railserve_device GROUP BY id')
-    print(device_list)
+    devices = Device.objects.raw('SELECT * FROM Railserve_device GROUP BY id')
+    # print(device_list)
     distances = []
-    for d in device_list:
+    for d in devices:
          device = Device.objects.filter(id=d.id)
 
          dist = aggregateDist(device)
 
          distances.append(dist)
 
-    device_list = zip(device_list, distances)
+    device_list = zip(devices, distances)
 
     template = loader.get_template('Railserve/index.html')
     context = {

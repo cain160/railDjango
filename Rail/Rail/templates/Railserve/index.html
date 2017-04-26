@@ -102,8 +102,10 @@
             {% load static %}
             <script src={% static "./JS/gmAPI.js" %}></script>
 
-            {% if device_list %}
-                {% for device in device_list %}
+        {%
+            if device %}
+        {%
+            for device in devices %}
                     <script>
 
                         updateDevices({{ device.position.latitude }}, {{ device.position.longitude }}, {{ device.id  }});
