@@ -38,6 +38,7 @@ def devices(request):
     template = loader.get_template('Railserve/index.html')
     context = {
         'device_list': device_list,
+        'devices':devices
     }
     return HttpResponse(template.render(context, request))
     ##output =

@@ -39,7 +39,6 @@
                     </script>
                     <thead>
                     <tr>
-                        <th>Time</th>
                         <th>Date</th>
                         <th>Latitude</th>
                         <th>Longitude</th>
@@ -52,12 +51,11 @@
                     <tr>
                         {% if device_data %}
                         {% for dev,distance in device_data %}
-                        <td>{{ dev.id }}</td>
                         <td>{{ dev.date }}</td>
                         <td>{{ dev.position.latitude }}</td>
                         <td>{{ dev.position.longitude }}</td>
-                        <td>{{ distance }}</td>
-                        <td>10</td>
+                        <td>{{ distance|floatformat:2 }}</td>
+                        <td>TBD</td>
                     </tr>
                     {% endfor %}
                     {% endif %}
@@ -91,7 +89,7 @@
                         var mapCanvas = document.getElementById("map");
                         var mapOptions = {
                             center: new google.maps.LatLng({{ device.0.position.latitude }}, {{ device.0.position.longitude }}),
-                            zoom: 14
+                            zoom: 6
                         };
                         var map = new google.maps.Map(mapCanvas, mapOptions);
                         markers[0].setMap(map);
@@ -102,11 +100,15 @@
                             for (var i = 0; i < markers.length; i++) {
                                 if (i == 0)
                                     infowindow = new google.maps.InfoWindow({
-                                        content: "Starting Point"
+                                        content: "Current Point"
+                                    });
+                                else if (i == markers.length-1)
+                                    infowindow = new google.maps.InfoWindow({
+                                        content: "Start Point"
                                     });
                                 else {
                                     infowindow = new google.maps.InfoWindow({
-                                        content: "Destination " + i
+                                        content: "Destination " + (markers.length-(i+1))
                                     });
                                 }
                                 markers[i].setMap(map);

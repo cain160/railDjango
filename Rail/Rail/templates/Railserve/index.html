@@ -103,18 +103,16 @@
             <script src={% static "./JS/gmAPI.js" %}></script>
 
 
-        {%
-            if device %}
+        {% if devices %}
 
-
-        {%
-            for device in devices %}
+            {% for device in devices %}
                     <script>
 
+                        //alert({{device.position.latitude }}+"  test");
                         updateDevices({{ device.position.latitude }}, {{ device.position.longitude }}, {{ device.id  }});
                     </script>
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
+        {% endif %}
 
             <script async defer
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPYnUWFD4QdPmpw8d8iYBqZCaY_rnbTw8&callback=initMap">
