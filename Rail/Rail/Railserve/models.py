@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+from  django import utils
 from django.db import models
 
 
@@ -25,7 +25,7 @@ class Device(models.Model):
     status = models.BooleanField("True if the device is on, and false otherwise")
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
     speed = models.FloatField()
-    date = models.DateTimeField(auto_now=True, primary_key=True)
+    date = models.DateTimeField(default=utils.timezone.now, primary_key=True)
 
     class Meta:
         unique_together = ('position', 'id')
@@ -38,6 +38,11 @@ class Device(models.Model):
 
     def last_position(self):
         return self
+
+        #  def save(self, *args, **kwargs):
+        #      if date is None:
+        #         date = datetime.datetime.now()
+        #      super(Device, self).save(*args, **kwargs)
 
 
 class Path(models.Model):

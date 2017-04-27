@@ -1,10 +1,9 @@
 '''
     Simple udp socket server
 '''
+import datetime
 import socket
 import sys
-
-import datetime
 
 import django
 
@@ -101,6 +100,7 @@ while 1:
     p.save()
     d = models.Device(id=id,status=on_off,speed=speed,position=p, distance_on = 0,date=actual_date)
     d.save()
+    # d._do_update(pk_val=id,update_fields=date,values=actual_date,forced_update=True)
 
 
 
